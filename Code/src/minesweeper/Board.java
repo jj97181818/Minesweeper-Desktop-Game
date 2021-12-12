@@ -180,6 +180,7 @@ public class Board
         }
         catch(SQLException sqlex)
         {
+            System.out.println("waaaaaaaaaaaaaaa");
             sqlex.printStackTrace();
             return false;
         }        

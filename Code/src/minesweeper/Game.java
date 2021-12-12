@@ -46,7 +46,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
 
         try 
         {
-            p = new File(Game.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getPath() + "\\db.accdb";
+            p = new File(Game.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getPath() + "/db.accdb";
         }
         catch (URISyntaxException ex) 
         {
