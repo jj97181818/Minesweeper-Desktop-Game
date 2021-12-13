@@ -17,16 +17,16 @@ public class Score
 {
     ArrayList<Time> bestTimes;
     
-    int gamesPlayed;
-    int gamesWon;
+    private int gamesPlayed;
+    private int gamesWon;
        
-    int longestWinningStreak;
-    int longestLosingStreak;
+    private int longestWinningStreak;
+    private int longestLosingStreak;
     
-    int currentStreak;
+    private int currentStreak;
 
-    int currentWinningStreak;
-    int currentLosingStreak;
+    private int currentWinningStreak;
+    private int currentLosingStreak;
     
     public Score()
     {
