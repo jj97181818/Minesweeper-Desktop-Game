@@ -80,7 +80,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
     
     public void resumeGame()
     {
-        if(board.checkSave())
+        if(board.checkBoardStateExist())
         {
             ImageIcon question = new ImageIcon(getClass().getResource("/resources/question.png"));      
 
@@ -92,7 +92,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
                 case JOptionPane.YES_OPTION:      
       
                     //load board's state
-                    Pair p = board.loadSaveGame();
+                    Pair p = board.loadBoardState();
                     
                     //set button's images
                     setButtonImages();
@@ -109,11 +109,11 @@ public class Game implements MouseListener, ActionListener, WindowListener
                     break;
 
                 case JOptionPane.NO_OPTION:
-                    board.deleteSavedGame();
+                    board.deleteBoardState();
                     break;
                     
                 case JOptionPane.CLOSED_OPTION:
-                    board.deleteSavedGame();
+                    board.deleteBoardState();
                     break;
             }
         }
@@ -188,7 +188,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
     {
         this.playing = false;
         
-        board.resetBoard();
+        board.resetBoardState();
         
         gui.interruptTimer();
         gui.resetTimer();        
@@ -734,7 +734,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
                        @Override
                        protected Void doInBackground() throws Exception 
                        {
-                            board.saveGame(gui.getTimePassed(), gui.getMines());                
+                            board.saveBoardState(gui.getTimePassed(), gui.getMines());                
                             return null;
                        }
                        

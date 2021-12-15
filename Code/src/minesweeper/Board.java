@@ -88,7 +88,7 @@ public class Board
         {
             for(int y = 0 ; y < rows ; y++) 
             {
-                cells[x][y].setSurroundingMines(calculateNeighbours(x,y));                        
+                cells[x][y].setSurroundingMines(calculateSurroundingMinesNumber(x,y));                        
             }
         }
     }
@@ -100,7 +100,7 @@ public class Board
     //---------------------HELPER FUNCTIONS---------------------------//        
 
     //Calculates the number of surrounding mines ("neighbours")
-    public int calculateNeighbours(int xCo, int yCo)
+    public int calculateSurroundingMinesNumber(int xCo, int yCo)
     {
         int neighbours = 0;
 
@@ -149,7 +149,7 @@ public class Board
     //-------------DATA BASE------------------------//
     
     // to check whether there is a save game or not
-    public boolean checkSave()
+    public boolean checkBoardStateExist()
     {
         Connection connection = null;
         Statement statement = null;
@@ -180,7 +180,6 @@ public class Board
         }
         catch(SQLException sqlex)
         {
-            System.out.println("waaaaaaaaaaaaaaa");
             sqlex.printStackTrace();
             return false;
         }        
@@ -189,7 +188,7 @@ public class Board
     //--------------LOAD SAVED GAME-----------------//
     
     
-    public Pair loadSaveGame()
+    public Pair loadBoardState()
     {
         Connection connection = null;
         Statement statement = null;
@@ -229,7 +228,7 @@ public class Board
             Pair p = new Pair(resultSet.getInt("TIMER"),resultSet.getInt("MINES"));
             
             //After loading, delete the saved game
-            deleteSavedGame();
+            deleteBoardState();
             
             // cleanup resources, once after processing
             resultSet.close();
@@ -249,7 +248,7 @@ public class Board
     
     
     //------------------------------------------------------------------------//
-    public void deleteSavedGame()
+    public void deleteBoardState()
     {
         Connection connection = null;
         PreparedStatement statement = null;
@@ -283,7 +282,7 @@ public class Board
     
            
     //--------------SAVE GAME IN DATABASE-----------//
-    public void saveGame(int timer, int mines)
+    public void saveBoardState(int timer, int mines)
     {
         Connection connection = null;
         PreparedStatement statement = null;
@@ -365,7 +364,7 @@ public class Board
     }
     //-----------------------------------------//
 
-    public void resetBoard()
+    public void resetBoardState()
     {
         for(int x = 0 ; x < cols ; x++) 
         {
