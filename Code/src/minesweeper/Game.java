@@ -200,7 +200,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
     private void endGame()
     {
         playing = false;
-        showAll();
+        showBoardSolution();
 
         score.save();
     }
@@ -533,7 +533,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
 	
         
     // Shows the "solution" of the game.
-    private void showAll()
+    private void showBoardSolution()
     {
         String cellSolution;
         
@@ -653,7 +653,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
      * If a player clicks on a zero, all surrounding cells ("neighbours") must revealed.
      * This method is recursive: if a neighbour is also a zero, his neighbours must also be revealed.
      */
-    public void findZeroes(int xCo, int yCo)
+    public void findSurroundingZeroes(int xCo, int yCo)
     {
         int neighbours;
         
@@ -684,7 +684,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
                         // Yes, give it a special color and recurse!
                         buttons[x][y].setBackground(Color.lightGray);
                         buttons[x][y].setText("");
-                        findZeroes(x, y);
+                        findSurroundingZeroes(x, y);
                     }
                     else
                     {
@@ -872,7 +872,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
                             // Show all surrounding cells.
                             button.setBackground(Color.lightGray);
                             button.setText("");
-                            findZeroes(x, y);
+                            findSurroundingZeroes(x, y);
                         } 
                         else 
                         {
