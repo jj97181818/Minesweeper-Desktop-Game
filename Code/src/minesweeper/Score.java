@@ -3,14 +3,12 @@ package minesweeper;
 import static java.lang.Math.ceil;
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collections;
-import java.util.Comparator;
 
 
 public class Score
@@ -276,43 +274,4 @@ public class Score
         }
         
     }
-
-    //--------------------------------------------------//
-    
-    
-    //---------------------------------------------------//
-    public class TimeComparator implements Comparator<Time>
-    {
-        @Override
-        public int compare(Time a, Time b) {
-            if (a.getTimeValue() > b.getTimeValue())
-                return 1;
-            else if (a.getTimeValue() < b.getTimeValue())
-                return -1;
-            else
-                return 0;
-        }                        
-    }
-
-    //----------------------------------------------------------//
-    public class Time{
-        Date date;
-        int time;
-        
-        public Time(int t, Date d)
-        {
-            time = t;
-            date = d;
-        }
-        
-        public Date getDateValue()
-        {
-            return date;
-        }
-        
-        public int getTimeValue()
-        {
-            return time;
-        }        
-    }    
 }
