@@ -20,7 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.util.Pair;
 import javax.swing.border.TitledBorder;
-import minesweeper.Score.Time;
+import minesweeper.Time;
 
 
 
