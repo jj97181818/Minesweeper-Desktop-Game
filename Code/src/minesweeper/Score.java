@@ -78,22 +78,22 @@ public class Score
         return currentWinningStreak;
     }
     
-    public void incGamesWon()
+    public void increaseGamesWon()
     {
         gamesWon++;
     }
     
-    public void incGamesPlayed()
+    public void increaseGamesPlayed()
     {
         gamesPlayed++;
     }
     
-    public void incCurrentStreak()
+    public void increaseCurrentStreak()
     {
         currentStreak++;
     }
     
-    public void incCurrentLosingStreak()
+    public void increaseCurrentLosingStreak()
     {
         currentLosingStreak++;
         
@@ -103,7 +103,7 @@ public class Score
         }                
     }
 
-    public void incCurrentWinningStreak()
+    public void increaseCurrentWinningStreak()
     {
         currentWinningStreak++;
         
@@ -114,7 +114,7 @@ public class Score
     }
     
     
-    public void decCurrentStreak()
+    public void decreaseCurrentStreak()
     {        
         currentStreak--;
     }    
@@ -148,7 +148,7 @@ public class Score
     //------------DATABASE--------------------------//
     
     //------------POPULATE FROM DATABASE------------//
-    public boolean populate()
+    public boolean getScoreFromDB()
     {
         Connection connection = null;
         Statement statement = null;
@@ -213,7 +213,7 @@ public class Score
     }
 
     
-    public void save()
+    public void saveScoreIntoDB()
     {
         Connection connection = null;
         PreparedStatement statement = null;

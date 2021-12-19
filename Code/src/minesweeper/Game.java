@@ -57,7 +57,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
 
         
         score = new Score();
-        score.populate();
+        score.getScoreFromDB();
         
         UI.setLook("Nimbus");
                         
@@ -202,7 +202,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
         playing = false;
         showBoardSolution();
 
-        score.save();
+        score.saveScoreIntoDB();
     }
 
     
@@ -210,10 +210,10 @@ public class Game implements MouseListener, ActionListener, WindowListener
     
     public void gameWon()
     {
-        score.incCurrentStreak();
-        score.incCurrentWinningStreak();
-        score.incGamesWon();
-        score.incGamesPlayed();
+        score.increaseCurrentStreak();
+        score.increaseCurrentWinningStreak();
+        score.increaseGamesWon();
+        score.increaseGamesPlayed();
         
         gui.interruptTimer();
         endGame();
@@ -316,9 +316,9 @@ public class Game implements MouseListener, ActionListener, WindowListener
     
     public void gameLost()
     {
-        score.decCurrentStreak();
-        score.incCurrentLosingStreak();
-        score.incGamesPlayed();
+        score.decreaseCurrentStreak();
+        score.increaseCurrentLosingStreak();
+        score.increaseGamesPlayed();
         
         gui.interruptTimer();
         
@@ -496,7 +496,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
                 case JOptionPane.YES_OPTION:      
 
                     score.resetScore();
-                    score.save();
+                    score.saveScoreIntoDB();
                     dialog.dispose();
                     showScore();
                     break;
@@ -717,7 +717,7 @@ public class Game implements MouseListener, ActionListener, WindowListener
                 case JOptionPane.YES_OPTION:
                     
                     gui.interruptTimer();
-                    score.save();
+                    score.saveScoreIntoDB();
                     
                     JDialog dialog = new JDialog(gui, Dialog.ModalityType.DOCUMENT_MODAL);
                     JPanel panel = new JPanel();
@@ -752,8 +752,8 @@ public class Game implements MouseListener, ActionListener, WindowListener
                 
                 //dont save                    
                 case JOptionPane.NO_OPTION:
-                    score.incGamesPlayed();
-                    score.save();
+                    score.increaseGamesPlayed();
+                    score.saveScoreIntoDB();
                     System.exit(0);
                     break;
                     
@@ -787,13 +787,13 @@ public class Game implements MouseListener, ActionListener, WindowListener
                         
                         // Initialize the new game.
                         newGame();
-                        score.incGamesPlayed();
-                        score.save();
+                        score.increaseGamesPlayed();
+                        score.saveScoreIntoDB();
                         break;
 
                     case JOptionPane.NO_OPTION: 
-                        score.incGamesPlayed();   
-                        score.save();
+                        score.increaseGamesPlayed();   
+                        score.saveScoreIntoDB();
                         restartGame();
                         break;
                     
