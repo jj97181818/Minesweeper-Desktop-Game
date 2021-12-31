@@ -99,42 +99,6 @@ public class Game implements MouseListener, ActionListener, WindowListener
         this.mines = (int)p.getValue();
         playing = true;
     }
-    //-------------------------------------------------//
-    public void setButtonImages()
-    {
-        Cell cells[][] = board.getCells();
-        JButton buttons[][] = gui.getButtons();
-        
-        for( int y=0 ; y<board.getRows() ; y++ ) 
-        {
-            for( int x=0 ; x<board.getCols() ; x++ ) 
-            {
-                buttons[x][y].setIcon(null);
-                
-                if (cells[x][y].getContent().equals(""))
-                {
-                    buttons[x][y].setIcon(gui.getIconTile());
-                }
-                else if (cells[x][y].getContent().equals("F"))
-                {
-                    buttons[x][y].setIcon(gui.getIconFlag());
-                    buttons[x][y].setBackground(Color.blue);	                    
-                }
-                else if (cells[x][y].getContent().equals("0"))
-                {
-                    buttons[x][y].setBackground(Color.lightGray);
-                }
-                else
-                {
-                    buttons[x][y].setBackground(Color.lightGray);                    
-                    buttons[x][y].setText(cells[x][y].getContent());
-                    gui.setTextColor(buttons[x][y]);                                        
-                }
-            }
-        }
-    }
-    
-    
     //------------------------------------------------------------//
         
     public void createBoard()
