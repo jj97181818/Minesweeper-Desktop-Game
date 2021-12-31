@@ -25,7 +25,7 @@ import minesweeper.Time;
 
 
 // This is the main controller class
-public class Game implements MouseListener, ActionListener, WindowListener
+public class Game
 {
     public static String dbPath;
     // "playing" indicates whether a game is running (true) or not (false).
@@ -642,7 +642,6 @@ public class Game implements MouseListener, ActionListener, WindowListener
     }
     //-----------------------------------------------------------------------------//
     //This function is called when clicked on closed button or exit
-    @Override
     public void windowClosing(WindowEvent e) 
     {
         if (playing)
@@ -709,7 +708,6 @@ public class Game implements MouseListener, ActionListener, WindowListener
     
     //-----------------------------------------------------------------------//
 
-    @Override
     public void actionPerformed(ActionEvent e) {        
         JMenuItem menuItem = (JMenuItem) e.getSource();
 
@@ -761,7 +759,6 @@ public class Game implements MouseListener, ActionListener, WindowListener
     //--------------------------------------------------------------------------//
         
     //Mouse Click Listener
-    @Override
     public void mouseClicked(MouseEvent e)
     {
         // start timer on first click
@@ -852,48 +849,4 @@ public class Game implements MouseListener, ActionListener, WindowListener
         }
     }
 
-    //-------------------------RELATED TO SCORES----------------------//
-
-
-    
-    //---------------------EMPTY FUNCTIONS-------------------------------//
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-    }    
-
-    @Override
-    public void windowOpened(WindowEvent e) {
-    }
-
-    @Override
-    public void windowClosed(WindowEvent e) {
-    }
-
-    @Override
-    public void windowIconified(WindowEvent e) {
-    }
-
-    @Override
-    public void windowDeiconified(WindowEvent e) {
-    }
-
-    @Override
-    public void windowActivated(WindowEvent e) {
-    }
-
-    @Override
-    public void windowDeactivated(WindowEvent e) {
-    }
 }

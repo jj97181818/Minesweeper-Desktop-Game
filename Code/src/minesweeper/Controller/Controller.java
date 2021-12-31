@@ -21,7 +21,7 @@ import javafx.util.Pair;
 import javax.swing.border.TitledBorder;
 import minesweeper.Time;
 
-public class Controller {
+public class Controller implements MouseListener, ActionListener, WindowListener {
     private UI gui;
     private Game game;
     
@@ -35,7 +35,7 @@ public class Controller {
         
         this.gui = new UI(board.getRows(), board.getCols(), board.getNumberOfMines());  
         this.game = new Game(gui, board);
-        this.gui.setButtonListeners(game);
+        this.gui.setButtonListeners(this);
         
         gui.setVisible(true);
         gui.setIcons();        
@@ -114,5 +114,74 @@ public class Controller {
                 }
             }
         }
+    }
+    //-----------------------------------------------------------------------------//
+    //This function is called when clicked on closed button or exit
+    @Override
+    public void windowClosing(WindowEvent e) 
+    {
+        game.windowClosing(e);
+    }
+    
+    //-----------------------------------------------------------------------//
+
+    @Override
+    public void actionPerformed(ActionEvent e) {        
+        game.actionPerformed(e);   
+    }
+    
+    
+    //--------------------------------------------------------------------------//
+        
+    //Mouse Click Listener
+    @Override
+    public void mouseClicked(MouseEvent e)
+    {
+        game.mouseClicked(e);
+    }
+
+    //-------------------------RELATED TO SCORES----------------------//
+
+
+    
+    //---------------------EMPTY FUNCTIONS-------------------------------//
+    @Override
+    public void mousePressed(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+    }    
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
     }
 }

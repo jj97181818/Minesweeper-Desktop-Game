@@ -313,23 +313,23 @@ public class UI extends JFrame
     
     //---------------SET LISTENERS--------------------------//
     
-    public void setButtonListeners(Game game)
+    public void setButtonListeners(Controller controller)
     {
-        addWindowListener(game);
+        addWindowListener(controller);
     
         // Set listeners for all buttons in the grid in gameBoard
         for( int x=0 ; x<cols ; x++ ) 
         {
             for( int y=0 ; y<rows ; y++ ) 
             {
-                buttons[x][y].addMouseListener(game);
+                buttons[x][y].addMouseListener(controller);
             }
         }
         
         // Set listeners for menu items in menu bar
-       newGame.addActionListener(game);
-       statistics.addActionListener(game);
-       exit.addActionListener(game);
+       newGame.addActionListener(controller);
+       statistics.addActionListener(controller);
+       exit.addActionListener(controller);
 
        newGame.setAccelerator(KeyStroke.getKeyStroke('N', Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask()));
        exit.setAccelerator(KeyStroke.getKeyStroke('Q', Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask()));
