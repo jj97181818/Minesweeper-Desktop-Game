@@ -3,9 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/jj97181818/Desktop/Minesweeper-Desktop-Game/Code/src/minesweeper/Model/Game.java</file>
+            <file>file:/Users/jj97181818/Desktop/Minesweeper-Desktop-Game/Code/src/minesweeper/Model/Score.java</file>
             <file>file:/Users/jj97181818/Desktop/Minesweeper-Desktop-Game/Code/src/minesweeper/Controller/Controller.java</file>
+            <file>file:/Users/jj97181818/Desktop/Minesweeper-Desktop-Game/Code/src/minesweeper/Model/Game.java</file>
             <file>file:/Users/jj97181818/Desktop/Minesweeper-Desktop-Game/Code/src/minesweeper/View/UI.java</file>
+            <file>file:/Users/jj97181818/Desktop/Minesweeper-Desktop-Game/Code/src/minesweeper/Model/Board.java</file>
             <file>file:/Users/jj97181818/Desktop/Minesweeper-Desktop-Game/Code/src/minesweeper/Main.java</file>
         </group>
     </open-files>

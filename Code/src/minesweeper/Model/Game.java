@@ -36,6 +36,9 @@ public class Game implements MouseListener, ActionListener, WindowListener
     private UI gui;
     
     private Score score;
+    
+    private int timePassed;
+    private int mines;
         
     //------------------------------------------------------------------//        
 
@@ -43,7 +46,6 @@ public class Game implements MouseListener, ActionListener, WindowListener
     {
         this.gui = gui;
         this.board = board;
-        
         // set db path
         String p = "";
 
@@ -65,7 +67,6 @@ public class Game implements MouseListener, ActionListener, WindowListener
                         
         this.playing = false;
         
-        resumeGame();
     }
 
     
@@ -73,50 +74,31 @@ public class Game implements MouseListener, ActionListener, WindowListener
         return this.board;
     }
     
+//    public boolean getPlaying() {
+//        return this.playing;
+//    }
+//   
+//    public boolean setPlaying(boolean playing) {
+//        this.playing = playing;
+//    }
+    
+    public int getTimePassed() {
+        return this.timePassed;
+    }
+    
+    public int getMines() {
+        return this.mines;
+    }
     //-----------------Load Save Game (if any)--------------------------//
     
     public void resumeGame()
     {
-        if(board.checkBoardStateExist())
-        {
-            ImageIcon question = new ImageIcon(getClass().getResource("/resources/question.png"));      
-
-            int option = JOptionPane.showOptionDialog(null, "Do you want to continue your saved game?", 
-                            "Saved Game Found", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, question,null,null);
-
-            switch(option) 
-            {
-                case JOptionPane.YES_OPTION:      
-      
-                    //load board's state
-                    Pair p = board.loadBoardState();
-                    
-                    //set button's images
-                    setButtonImages();
-                    
-                    //load timer's value                                        
-                    gui.setTimePassed((int)p.getKey());
-
-                    //load mines value
-                    gui.setMines((int)p.getValue());
-                    
-                    gui.startTimer();
-                    
-                    playing = true;
-                    break;
-
-                case JOptionPane.NO_OPTION:
-                    board.deleteBoardState();
-                    break;
-                    
-                case JOptionPane.CLOSED_OPTION:
-                    board.deleteBoardState();
-                    break;
-            }
-        }
+        //load board's state
+        Pair p = board.loadBoardState();
+        this.timePassed = (int)p.getKey();
+        this.mines = (int)p.getValue();
+        playing = true;
     }
-
-
     //-------------------------------------------------//
     public void setButtonImages()
     {
