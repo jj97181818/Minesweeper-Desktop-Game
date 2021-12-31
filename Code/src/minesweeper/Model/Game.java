@@ -32,15 +32,18 @@ public class Game implements MouseListener, ActionListener, WindowListener
     private boolean playing; 
 
     private Board board;
-
+    
     private UI gui;
     
     private Score score;
         
     //------------------------------------------------------------------//        
 
-    public Game()
+    public Game(UI gui, Board board)
     {
+        this.gui = gui;
+        this.board = board;
+        
         // set db path
         String p = "";
 
@@ -55,27 +58,21 @@ public class Game implements MouseListener, ActionListener, WindowListener
 
         dbPath =   "jdbc:ucanaccess://" + p;
 
+        //createBoard();
         
         score = new Score();
         score.getScoreFromDB();
-        
-        UI.setLook("Nimbus");
-                        
-        createBoard();
-        
-        this.gui = new UI(board.getRows(), board.getCols(), board.getNumberOfMines());        
-        this.gui.setButtonListeners(this);
                         
         this.playing = false;
-        
-        gui.setVisible(true);
-        
-        gui.setIcons();        
-        gui.hideAll();
         
         resumeGame();
     }
 
+    
+    public Board getBoard() {
+        return this.board;
+    }
+    
     //-----------------Load Save Game (if any)--------------------------//
     
     public void resumeGame()
