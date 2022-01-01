@@ -135,6 +135,8 @@ public class Controller implements MouseListener, ActionListener, WindowListener
     
     public void gameWon()
     {
+        showBoardSolution();
+        
         gui.interruptTimer();
         
         JDialog dialog = new JDialog(gui, Dialog.ModalityType.DOCUMENT_MODAL);
@@ -233,6 +235,8 @@ public class Controller implements MouseListener, ActionListener, WindowListener
     
     public void gameLost()
     {
+        showBoardSolution();
+        
         gui.interruptTimer();
         //----------------------------------------------------------------//
 
@@ -435,6 +439,68 @@ public class Controller implements MouseListener, ActionListener, WindowListener
         dialog.setVisible(true);                        
     }
     
+    // Shows the "solution" of the game.
+    private void showBoardSolution()
+    {
+        String cellSolution;
+        
+        Cell cells[][] = game.getBoard().getCells();
+        JButton buttons[][] = gui.getButtons();
+
+        for (int x=0; x<game.getBoard().getCols(); x++ ) 
+        {
+            for (int y=0; y<game.getBoard().getRows(); y++ ) 
+            {
+                cellSolution = cells[x][y].getContent();
+
+                // Is the cell still unrevealed
+                if( cellSolution.equals("") ) 
+                {
+                    buttons[x][y].setIcon(null);
+                    
+                    // Get Neighbours
+                    cellSolution = Integer.toString(cells[x][y].getSurroundingMines());
+
+                    // Is it a mine?
+                    if(cells[x][y].getMine()) 
+                    {
+                        cellSolution = "M";
+                        
+                        //mine
+                        buttons[x][y].setIcon(gui.getIconMine());
+                        buttons[x][y].setBackground(Color.lightGray);                        
+                    }
+                    else
+                    {
+                        if(cellSolution.equals("0"))
+                        {
+                            buttons[x][y].setText("");                           
+                            buttons[x][y].setBackground(Color.lightGray);
+                        }
+                        else
+                        {
+                            buttons[x][y].setBackground(Color.lightGray);
+                            buttons[x][y].setText(cellSolution);
+                            gui.setTextColor(buttons[x][y]);
+                        }
+                    }
+                }
+
+                // This cell is already flagged!
+                else if( cellSolution.equals("F") ) 
+                {
+                    // Is it correctly flagged?
+                    if(!cells[x][y].getMine()) 
+                    {
+                        buttons[x][y].setBackground(Color.orange);
+                    }
+                    else
+                        buttons[x][y].setBackground(Color.green);
+                }
+                
+            }
+        }
+    }
     
     //-----------------------------------------------------------------------------//
     //This function is called when clicked on closed button or exit
