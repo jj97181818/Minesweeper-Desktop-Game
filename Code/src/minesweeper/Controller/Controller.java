@@ -328,6 +328,114 @@ public class Controller implements MouseListener, ActionListener, WindowListener
         dialog.setVisible(true);        
     }
     
+    public void showScore()
+    {
+        JDialog dialog = new JDialog(gui, Dialog.ModalityType.DOCUMENT_MODAL);
+
+        //-----BEST TIMES--------//
+        
+        JPanel bestTimes = new JPanel();
+        bestTimes.setLayout(new GridLayout(5,1));
+        
+        ArrayList<Time> bTimes = game.getScore().getBestTimes();
+        
+        for (int i = 0; i < bTimes.size(); i++)
+        {
+            JLabel t = new JLabel("  " + bTimes.get(i).getTimeValue() + "           " + bTimes.get(i).getDateValue());            
+            bestTimes.add(t);
+        }
+        
+        if (bTimes.isEmpty())
+        {
+            JLabel t = new JLabel("                               ");            
+            bestTimes.add(t);
+        }
+        
+        TitledBorder b = BorderFactory.createTitledBorder("Best Times");
+        b.setTitleJustification(TitledBorder.LEFT);
+
+        bestTimes.setBorder(b);
+                
+        //-----STATISTICS-----------//
+        JPanel statistics = new JPanel();
+        
+        statistics.setLayout(new GridLayout(6,1,0,10));        
+        
+        JLabel gPlayed = new JLabel("  Games Played:  " + game.getScore().getGamesPlayed());
+        JLabel gWon = new JLabel("  Games Won:  " + game.getScore().getGamesWon());
+        JLabel gPercentage = new JLabel("  Win Percentage:  " + game.getScore().getWinPercentage() + "%");
+        JLabel lWin = new JLabel("  Longest Winning Streak:  " + game.getScore().getLongestWinningStreak());
+        JLabel lLose = new JLabel("  Longest Losing Streak:  " + game.getScore().getLongestLosingStreak());
+        JLabel currentStreak = new JLabel("  Current Streak:  " + game.getScore().getCurrentStreak());
+
+        
+        statistics.add(gPlayed);
+        statistics.add(gWon);
+        statistics.add(gPercentage);
+        statistics.add(lWin);
+        statistics.add(lLose);
+        statistics.add(currentStreak);
+                        
+        Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);        
+        statistics.setBorder(loweredetched);
+        
+        
+        //--------BUTTONS----------//
+        JPanel buttons = new JPanel();
+        buttons.setLayout(new GridLayout(1,2,10,0));
+        
+        JButton close = new JButton("Close");
+        JButton reset = new JButton("Reset");
+
+        
+        close.addActionListener((ActionEvent e) -> {
+            dialog.dispose();
+        });        
+        reset.addActionListener((ActionEvent e) -> {
+            ImageIcon question = new ImageIcon(getClass().getResource("/resources/question.png"));      
+
+            int option = JOptionPane.showOptionDialog(null, "Do you want to reset all your statistics to zero?", 
+                            "Reset Statistics", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, question,null,null);
+
+            switch(option) 
+            {
+                case JOptionPane.YES_OPTION:      
+
+                    game.getScore().resetScore();
+                    game.getScore().saveScoreIntoDB();
+                    dialog.dispose();
+                    showScore();
+                    break;
+
+                case JOptionPane.NO_OPTION: 
+                    break;
+            }
+        });        
+        
+        buttons.add(close);
+        buttons.add(reset);
+        
+        if (game.getScore().getGamesPlayed() == 0)
+            reset.setEnabled(false);
+        
+        //--------DIALOG-------------//
+        
+        JPanel c = new JPanel();
+        c.setLayout(new BorderLayout(20,20));
+        c.add(bestTimes, BorderLayout.WEST);
+        c.add(statistics, BorderLayout.CENTER);        
+        c.add(buttons, BorderLayout.SOUTH);
+        
+        c.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        
+        dialog.setTitle("Minesweeper Statistics - Haris Muneer");
+        dialog.add(c);
+        dialog.pack();
+        dialog.setLocationRelativeTo(gui);
+        dialog.setVisible(true);                        
+    }
+    
+    
     //-----------------------------------------------------------------------------//
     //This function is called when clicked on closed button or exit
     @Override
@@ -441,7 +549,7 @@ public class Controller implements MouseListener, ActionListener, WindowListener
         //Statistics
         else
         {
-            game.showScore();
+            showScore();
         }      
     }
     
