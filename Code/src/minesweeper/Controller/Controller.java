@@ -124,7 +124,12 @@ public class Controller implements MouseListener, ActionListener, WindowListener
     
     public void update(Observable obs, Object arg) {
         if (obs instanceof Game) {
-            gameWon();
+            if (arg == "Won") {
+                gameWon();
+            }
+            else if (arg == "Lost") {
+                gameLost();
+            }
         }
     }
     
@@ -224,6 +229,103 @@ public class Controller implements MouseListener, ActionListener, WindowListener
         dialog.pack();
         dialog.setLocationRelativeTo(gui);
         dialog.setVisible(true);                        
+    }
+    
+    public void gameLost()
+    {
+        gui.interruptTimer();
+        //----------------------------------------------------------------//
+
+        JDialog dialog = new JDialog(gui, Dialog.ModalityType.DOCUMENT_MODAL);
+        
+        //------MESSAGE-----------//
+        JLabel message = new JLabel("Sorry, you lost this game. Better luck next time!", SwingConstants.CENTER);
+                
+        //-----STATISTICS-----------//
+        JPanel statistics = new JPanel();
+        statistics.setLayout(new GridLayout(5,1,0,10));
+        
+        JLabel time = new JLabel("  Time:  " + Integer.toString(gui.getTimePassed()) + " seconds");
+        
+        JLabel bestTime = new JLabel();
+        
+        ArrayList<Time> bTimes = game.getScore().getBestTimes();
+        
+        if (bTimes.isEmpty())
+        {
+            bestTime.setText("                        ");
+        }
+        else
+        {
+            bestTime.setText("  Best Time:  " + bTimes.get(0).getTimeValue() + " seconds            Date:  " + bTimes.get(0).getDateValue());
+        }
+        
+        JLabel gPlayed = new JLabel("  Games Played:  " + game.getScore().getGamesPlayed());
+        JLabel gWon = new JLabel("  Games Won:  " + game.getScore().getGamesWon());
+        JLabel gPercentage = new JLabel("  Win Percentage:  " + game.getScore().getWinPercentage() + "%");
+        
+        statistics.add(time);
+        statistics.add(bestTime);
+        statistics.add(gPlayed);
+        statistics.add(gWon);
+        statistics.add(gPercentage);
+        
+        Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);        
+        statistics.setBorder(loweredetched);
+        
+        
+        //--------BUTTONS----------//
+        JPanel buttons = new JPanel();
+        buttons.setLayout(new GridLayout(1,3,2,0));
+        
+        JButton exit = new JButton("Exit");
+        JButton restart = new JButton("Restart");
+        JButton playAgain = new JButton("Play Again");
+
+        
+        exit.addActionListener((ActionEvent e) -> {
+            dialog.dispose();
+            windowClosing(null);
+        });        
+        restart.addActionListener((ActionEvent e) -> {
+            dialog.dispose();            
+            game.restartGame();
+        });        
+        playAgain.addActionListener((ActionEvent e) -> {
+            dialog.dispose();            
+            game.newGame();
+        });        
+        
+        
+        buttons.add(exit);
+        buttons.add(restart);
+        buttons.add(playAgain);
+        
+        //--------DIALOG-------------//
+        
+        JPanel c = new JPanel();
+        c.setLayout(new BorderLayout(20,20));
+        c.add(message, BorderLayout.NORTH);
+        c.add(statistics, BorderLayout.CENTER);
+        c.add(buttons, BorderLayout.SOUTH);
+        
+        c.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        
+        dialog.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                    dialog.dispose();
+                    game.newGame();
+            }
+            }
+        );
+        
+        dialog.setTitle("Game Lost");
+        dialog.add(c);
+        dialog.pack();
+        dialog.setLocationRelativeTo(gui);
+        dialog.setVisible(true);        
     }
     
     //-----------------------------------------------------------------------------//
