@@ -74,9 +74,13 @@ public class Game
         return this.board;
     }
     
-//    public boolean getPlaying() {
-//        return this.playing;
-//    }
+    public Score getScore() {
+        return this.score;
+    }
+    
+    public boolean getPlaying() {
+        return this.playing;
+    }
 //   
 //    public boolean setPlaying(boolean playing) {
 //        this.playing = playing;
@@ -537,15 +541,6 @@ public class Game
             }
         }
     }
-    
-
-    //-------------------------------------------------------------------------//
-    
-    //-------------------------------------------------------------------------//    
-    
-
-    //-------------------------------------------------------------------------//
-
     
     //--------------------------------------------------------------------------//
     

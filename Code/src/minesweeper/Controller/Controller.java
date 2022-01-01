@@ -120,7 +120,66 @@ public class Controller implements MouseListener, ActionListener, WindowListener
     @Override
     public void windowClosing(WindowEvent e) 
     {
-        game.windowClosing(e);
+        if (game.getPlaying())
+        {
+            ImageIcon question = new ImageIcon(getClass().getResource("/resources/question.png"));      
+
+            Object[] options = {"Save","Don't Save","Cancel"};
+
+            int quit = JOptionPane.showOptionDialog(null, "What do you want to do with the game in progress?", 
+                            "New Game", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, question, options, options[2]);
+
+            switch(quit) 
+            {
+                //save
+                case JOptionPane.YES_OPTION:
+                    
+                    gui.interruptTimer();
+                    game.getScore().saveScoreIntoDB();
+                    
+                    JDialog dialog = new JDialog(gui, Dialog.ModalityType.DOCUMENT_MODAL);
+                    JPanel panel = new JPanel();
+                    panel.setLayout(new BorderLayout());
+                    panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+                    panel.add(new JLabel("Saving.... Please Wait", SwingConstants.CENTER));
+                    dialog.add(panel);
+                    dialog.setTitle("Saving Game...");
+                    dialog.pack();
+                    dialog.setLocationRelativeTo(gui);                    
+                    dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+                    
+                    SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>(){
+                       @Override
+                       protected Void doInBackground() throws Exception 
+                       {
+                            game.getBoard().saveBoardState(gui.getTimePassed(), gui.getMines());                
+                            return null;
+                       }
+                       
+                       @Override
+                       protected void done(){
+                           dialog.dispose();                           
+                       }                       
+                    };
+                            
+                    worker.execute();
+                    dialog.setVisible(true);
+                                                            
+                    System.exit(0);
+                    break;
+                
+                //dont save                    
+                case JOptionPane.NO_OPTION:
+                    game.getScore().increaseGamesPlayed();
+                    game.getScore().saveScoreIntoDB();
+                    System.exit(0);
+                    break;
+                    
+                case JOptionPane.CANCEL_OPTION: break;
+            }
+        }
+        else
+            System.exit(0);
     }
     
     //-----------------------------------------------------------------------//
