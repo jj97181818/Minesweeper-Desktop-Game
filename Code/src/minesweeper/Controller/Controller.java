@@ -186,7 +186,50 @@ public class Controller implements MouseListener, ActionListener, WindowListener
 
     @Override
     public void actionPerformed(ActionEvent e) {        
-        game.actionPerformed(e);   
+        JMenuItem menuItem = (JMenuItem) e.getSource();
+
+        if (menuItem.getName().equals("New Game"))
+        {
+            if (game.getPlaying())
+            {
+                ImageIcon question = new ImageIcon(getClass().getResource("/resources/question.png"));      
+
+                Object[] options = {"Quit and Start a New Game","Restart","Keep Playing"};
+                
+                int startNew = JOptionPane.showOptionDialog(null, "What do you want to do with the game in progress?", 
+                                "New Game", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, question, options, options[2]);
+
+                switch(startNew) 
+                {
+                    case JOptionPane.YES_OPTION:      
+                        
+                        // Initialize the new game.
+                        game.newGame();
+                        game.getScore().increaseGamesPlayed();
+                        game.getScore().saveScoreIntoDB();
+                        break;
+
+                    case JOptionPane.NO_OPTION: 
+                        game.getScore().increaseGamesPlayed();   
+                        game.getScore().saveScoreIntoDB();
+                        game.restartGame();
+                        break;
+                    
+                    case JOptionPane.CANCEL_OPTION: break;
+                }
+            }
+        }
+        
+        else if (menuItem.getName().equals("Exit"))
+        {
+            windowClosing(null);
+        }
+        
+        //Statistics
+        else
+        {
+            game.showScore();
+        }      
     }
     
     
