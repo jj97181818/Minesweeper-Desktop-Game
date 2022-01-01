@@ -135,6 +135,7 @@ public class Controller implements MouseListener, ActionListener, WindowListener
     
     public void gameWon()
     {
+        updateAllCells();
         showBoardSolution();
         
         gui.interruptTimer();
@@ -235,6 +236,7 @@ public class Controller implements MouseListener, ActionListener, WindowListener
     
     public void gameLost()
     {
+        updateAllCells();
         showBoardSolution();
         
         gui.interruptTimer();
@@ -502,6 +504,44 @@ public class Controller implements MouseListener, ActionListener, WindowListener
         }
     }
     
+    public void updateAllCells() {
+        JButton buttons[][] = gui.getButtons();
+        
+        for (int i = 0; i < game.getBoard().getRows(); i++) {
+            for (int j = 0; j < game.getBoard().getCols(); j++) {
+                if (!game.getBoard().getCells()[i][j].getContent().equals(""))
+                {
+                    buttons[i][j].setIcon(null);
+                    
+                    if (game.getBoard().getCells()[i][j].getContent().equals("F")) {
+                        buttons[i][j].setBackground(Color.blue);
+                        buttons[i][j].setIcon(gui.getIconFlag());
+                    }   
+                    else if(game.getBoard().getCells()[i][j].getContent().equals("M")) 
+                    {  
+                        //red mine
+                        buttons[i][j].setIcon(gui.getIconRedMine());
+                        buttons[i][j].setBackground(Color.red);
+                    }
+                    else 
+                    {
+                        int neighbours = game.getBoard().getCells()[i][j].getSurroundingMines();
+                        
+                        buttons[i][j].setBackground(Color.lightGray);
+                            
+                        if(neighbours == 0) {
+                            buttons[i][j].setText("");
+                        }
+                        else {
+                            buttons[i][j].setText(Integer.toString(neighbours));
+                            gui.setTextColor(buttons[i][j]);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     //-----------------------------------------------------------------------------//
     //This function is called when clicked on closed button or exit
     @Override
@@ -644,47 +684,11 @@ public class Controller implements MouseListener, ActionListener, WindowListener
             int x = Integer.parseInt(co[0]);
             int y = Integer.parseInt(co[1]);
 
-            // Get cell information.
-            boolean isMine = game.getBoard().getCells()[x][y].getMine();
-            int neighbours = game.getBoard().getCells()[x][y].getSurroundingMines();
-
             // Left Click
             if (SwingUtilities.isLeftMouseButton(e)) 
             {
-                if (!game.getBoard().getCells()[x][y].getContent().equals("F"))
-                {
-                    button.setIcon(null);
-
-                    //Mine is clicked.
-                    if(isMine) 
-                    {  
-                        //red mine
-                        button.setIcon(gui.getIconRedMine());
-                        button.setBackground(Color.red);
-                        game.getBoard().getCells()[x][y].setContent("M");
-
-                        game.gameLost();
-                    }
-                    else 
-                    {
-                        // The player has clicked on a number.
-                        game.getBoard().getCells()[x][y].setContent(Integer.toString(neighbours));
-                        button.setText(Integer.toString(neighbours));
-                        gui.setTextColor(button);
-
-                        if( neighbours == 0 ) 
-                        {
-                            // Show all surrounding cells.
-                            button.setBackground(Color.lightGray);
-                            button.setText("");
-                            game.findSurroundingZeroes(x, y);
-                        } 
-                        else 
-                        {
-                            button.setBackground(Color.lightGray);
-                        }
-                    }
-                }
+                game.leftClick(x, y);
+                updateAllCells();
             }
             // Right Click
             else if (SwingUtilities.isRightMouseButton(e)) 

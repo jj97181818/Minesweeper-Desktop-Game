@@ -208,6 +208,35 @@ public class Game extends Observable
     }
 
  
+    public void leftClick(int x, int y) {
+        // Get cell information.
+        boolean isMine = board.getCells()[x][y].getMine();
+        int neighbours = board.getCells()[x][y].getSurroundingMines();
+        
+        if (!board.getCells()[x][y].getContent().equals("F"))
+        {
+            //Mine is clicked.
+            if(isMine) 
+            {  
+                //red mine
+                getBoard().getCells()[x][y].setContent("M");
+
+                gameLost();
+            }
+            else 
+            {
+                // The player has clicked on a number.
+                board.getCells()[x][y].setContent(Integer.toString(neighbours));
+                
+                if( neighbours == 0 ) 
+                {
+                    // Show all surrounding cells.
+                    findSurroundingZeroes(x, y);
+                } 
+            }
+        }                                     
+    }                           
+    
     //Check the game to see if its finished or not
     public void checkGame()
     {		
