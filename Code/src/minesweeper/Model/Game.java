@@ -81,10 +81,10 @@ public class Game
     public boolean getPlaying() {
         return this.playing;
     }
-//   
-//    public boolean setPlaying(boolean playing) {
-//        this.playing = playing;
-//    }
+   
+    public boolean setPlaying(boolean playing) {
+        return this.playing = playing;
+    }
     
     public int getTimePassed() {
         return this.timePassed;
@@ -576,7 +576,7 @@ public class Game
 
  
     //Check the game to see if its finished or not
-    private void checkGame()
+    public void checkGame()
     {		
         if(isFinished()) 
         {            

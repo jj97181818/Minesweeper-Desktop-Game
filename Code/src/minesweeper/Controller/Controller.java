@@ -239,7 +239,92 @@ public class Controller implements MouseListener, ActionListener, WindowListener
     @Override
     public void mouseClicked(MouseEvent e)
     {
-        game.mouseClicked(e);
+        // start timer on first click
+        if(!game.getPlaying())
+        {
+            gui.startTimer();
+            game.setPlaying(true);
+        }
+        
+        if (game.getPlaying())
+        {
+            //Get the button's name
+            JButton button = (JButton)e.getSource();
+
+            // Get coordinates (button.getName().equals("x,y")).
+            String[] co = button.getName().split(",");
+
+            int x = Integer.parseInt(co[0]);
+            int y = Integer.parseInt(co[1]);
+
+            // Get cell information.
+            boolean isMine = game.getBoard().getCells()[x][y].getMine();
+            int neighbours = game.getBoard().getCells()[x][y].getSurroundingMines();
+
+            // Left Click
+            if (SwingUtilities.isLeftMouseButton(e)) 
+            {
+                if (!game.getBoard().getCells()[x][y].getContent().equals("F"))
+                {
+                    button.setIcon(null);
+
+                    //Mine is clicked.
+                    if(isMine) 
+                    {  
+                        //red mine
+                        button.setIcon(gui.getIconRedMine());
+                        button.setBackground(Color.red);
+                        game.getBoard().getCells()[x][y].setContent("M");
+
+                        game.gameLost();
+                    }
+                    else 
+                    {
+                        // The player has clicked on a number.
+                        game.getBoard().getCells()[x][y].setContent(Integer.toString(neighbours));
+                        button.setText(Integer.toString(neighbours));
+                        gui.setTextColor(button);
+
+                        if( neighbours == 0 ) 
+                        {
+                            // Show all surrounding cells.
+                            button.setBackground(Color.lightGray);
+                            button.setText("");
+                            game.findSurroundingZeroes(x, y);
+                        } 
+                        else 
+                        {
+                            button.setBackground(Color.lightGray);
+                        }
+                    }
+                }
+            }
+            // Right Click
+            else if (SwingUtilities.isRightMouseButton(e)) 
+            {
+                if(game.getBoard().getCells()[x][y].getContent().equals("F")) 
+                {   
+                    game.getBoard().getCells()[x][y].setContent("");
+                    button.setText("");
+                    button.setBackground(new Color(0,110,140));
+
+                    //simple blue
+
+                    button.setIcon(gui.getIconTile());
+                    gui.incMines();
+                }
+                else if (game.getBoard().getCells()[x][y].getContent().equals("")) 
+                {
+                    game.getBoard().getCells()[x][y].setContent("F");
+                    button.setBackground(Color.blue);	
+
+                    button.setIcon(gui.getIconFlag());
+                    gui.decMines();
+                }
+            }
+
+            game.checkGame();
+        }
     }
 
     //-------------------------RELATED TO SCORES----------------------//
