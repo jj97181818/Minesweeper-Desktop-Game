@@ -21,11 +21,13 @@ import java.util.logging.Logger;
 import javafx.util.Pair;
 import javax.swing.border.TitledBorder;
 import minesweeper.Time;
+import java.util.Observable;
+import java.util.Observer;
 
 
 
 // This is the main controller class
-public class Game
+public class Game extends Observable
 {
     public static String dbPath;
     // "playing" indicates whether a game is running (true) or not (false).
@@ -144,7 +146,7 @@ public class Game
     }
         
     //------------------------------------------------------------------------------//    
-    private void endGame()
+    public void endGame()
     {
         playing = false;
         showBoardSolution();
@@ -154,112 +156,17 @@ public class Game
 
     
     //-------------------------GAME WON AND GAME LOST ---------------------------------//
-    
-    public void gameWon()
-    {
-        score.increaseCurrentStreak();
-        score.increaseCurrentWinningStreak();
-        score.increaseGamesWon();
-        score.increaseGamesPlayed();
-        
-        gui.interruptTimer();
+    public void gameWon() {
+        getScore().increaseCurrentStreak();
+        getScore().increaseCurrentWinningStreak();
+        getScore().increaseGamesWon();
+        getScore().increaseGamesPlayed();
         endGame();
-        //----------------------------------------------------------------//
         
-        
-        JDialog dialog = new JDialog(gui, Dialog.ModalityType.DOCUMENT_MODAL);
-        
-        //------MESSAGE-----------//
-        JLabel message = new JLabel("Congratulations, you won the game!", SwingConstants.CENTER);
-                
-        //-----STATISTICS-----------//
-        JPanel statistics = new JPanel();
-        statistics.setLayout(new GridLayout(6,1,0,10));
-        
-        ArrayList<Time> bTimes = score.getBestTimes();
-        
-        if (bTimes.isEmpty() || (bTimes.get(0).getTimeValue() > gui.getTimePassed()))
-        {
-            statistics.add(new JLabel("    You have the fastest time for this difficulty level!    "));
-        }
-        
-        score.addTime(gui.getTimePassed(), new Date(System.currentTimeMillis()));
-                
-        JLabel time = new JLabel("  Time:  " + Integer.toString(gui.getTimePassed()) + " seconds            Date:  " + new Date(System.currentTimeMillis()));
-        
-        JLabel bestTime = new JLabel();
-        
-        
-        if (bTimes.isEmpty())
-        {
-            bestTime.setText("  Best Time:  ---                  Date:  ---");
-        }
-        else
-        {
-            bestTime.setText("  Best Time:  " + bTimes.get(0).getTimeValue() + " seconds            Date:  " + bTimes.get(0).getDateValue());
-        }
-        
-        JLabel gPlayed = new JLabel("  Games Played:  " + score.getGamesPlayed());
-        JLabel gWon = new JLabel("  Games Won:  " + score.getGamesWon());
-        JLabel gPercentage = new JLabel("  Win Percentage:  " + score.getWinPercentage() + "%");
-        
-        statistics.add(time);
-        statistics.add(bestTime);
-        statistics.add(gPlayed);
-        statistics.add(gWon);
-        statistics.add(gPercentage);
-        
-        Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);        
-        statistics.setBorder(loweredetched);
-        
-        
-        //--------BUTTONS----------//
-        JPanel buttons = new JPanel();
-        buttons.setLayout(new GridLayout(1,2,10,0));
-        
-        JButton exit = new JButton("Exit");
-        JButton playAgain = new JButton("Play Again");
-
-        
-        exit.addActionListener((ActionEvent e) -> {
-            dialog.dispose();
-            windowClosing(null);
-        });        
-        playAgain.addActionListener((ActionEvent e) -> {
-            dialog.dispose();            
-            newGame();
-        });        
-        
-        
-        buttons.add(exit);
-        buttons.add(playAgain);
-        
-        //--------DIALOG-------------//
-        
-        JPanel c = new JPanel();
-        c.setLayout(new BorderLayout(20,20));
-        c.add(message, BorderLayout.NORTH);
-        c.add(statistics, BorderLayout.CENTER);
-        c.add(buttons, BorderLayout.SOUTH);
-        
-        c.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        
-        dialog.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                    dialog.dispose();
-                    newGame();
-            }
-            }
-        );
-
-        dialog.setTitle("Game Won");
-        dialog.add(c);
-        dialog.pack();
-        dialog.setLocationRelativeTo(gui);
-        dialog.setVisible(true);                        
+        setChanged();
+        notifyObservers();
     }
+    
     
     public void gameLost()
     {
