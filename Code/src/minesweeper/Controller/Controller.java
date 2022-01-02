@@ -139,6 +139,14 @@ public class Controller implements MouseListener, ActionListener, WindowListener
         }
     }
     
+    public void newGame() {
+        game.newGame();
+        gui.interruptTimer();
+        gui.resetTimer();        
+        gui.initGame();
+        gui.setMines(game.getBoard().getNumberOfMines());
+    }
+    
     public void gameWon()
     {
         updateAllCells();
@@ -206,7 +214,7 @@ public class Controller implements MouseListener, ActionListener, WindowListener
         });        
         playAgain.addActionListener((ActionEvent e) -> {
             dialog.dispose();            
-            game.newGame();
+            newGame();
         });        
         
         
@@ -228,7 +236,7 @@ public class Controller implements MouseListener, ActionListener, WindowListener
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                     dialog.dispose();
-                    game.newGame();
+                    newGame();
             }
             }
         );
@@ -305,7 +313,7 @@ public class Controller implements MouseListener, ActionListener, WindowListener
         });        
         playAgain.addActionListener((ActionEvent e) -> {
             dialog.dispose();            
-            game.newGame();
+            newGame();
         });        
         
         
@@ -328,7 +336,7 @@ public class Controller implements MouseListener, ActionListener, WindowListener
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                     dialog.dispose();
-                    game.newGame();
+                    newGame();
             }
             }
         );
@@ -637,7 +645,7 @@ public class Controller implements MouseListener, ActionListener, WindowListener
                     case JOptionPane.YES_OPTION:      
                         
                         // Initialize the new game.
-                        game.newGame();
+                        newGame();
                         game.getScore().increaseGamesPlayed();
                         game.getScore().saveScoreIntoDB();
                         break;

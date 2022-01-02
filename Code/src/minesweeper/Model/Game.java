@@ -122,14 +122,8 @@ public class Game extends Observable
     //---------------------------------------------------------------//
     public void newGame()
     {                
-        this.playing = false;        
-                                
+        this.playing = false;      
         createBoard();
-        
-        gui.interruptTimer();
-        gui.resetTimer();        
-        gui.initGame();
-        gui.setMines(board.getNumberOfMines());
     }
     //------------------------------------------------------------------------------//
     
