@@ -1,30 +1,10 @@
 package minesweeper;
 
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.File;
 import java.net.URISyntaxException;
-import java.security.CodeSource;
-import java.util.ArrayList;
-import javax.swing.border.Border;
-import javax.swing.border.EtchedBorder;
-import java.sql.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.util.Pair;
-import javax.swing.border.TitledBorder;
-import minesweeper.Time;
 import java.util.Observable;
 import java.util.Observer;
-
-
 
 // This is the main controller class
 public class Game extends Observable

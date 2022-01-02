@@ -1,11 +1,9 @@
 package minesweeper;
 
-
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
-
 
 public class UI extends JFrame
 {
