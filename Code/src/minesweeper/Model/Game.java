@@ -130,13 +130,7 @@ public class Game extends Observable
     public void restartGame()
     {
         this.playing = false;
-        
         board.resetBoardState();
-        
-        gui.interruptTimer();
-        gui.resetTimer();        
-        gui.initGame();
-        gui.setMines(board.getNumberOfMines());
     }
         
     //------------------------------------------------------------------------------//    

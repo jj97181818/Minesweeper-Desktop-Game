@@ -147,6 +147,15 @@ public class Controller implements MouseListener, ActionListener, WindowListener
         gui.setMines(game.getBoard().getNumberOfMines());
     }
     
+    public void restartGame()
+    {
+        game.restartGame();
+        gui.interruptTimer();
+        gui.resetTimer();        
+        gui.initGame();
+        gui.setMines(game.getBoard().getNumberOfMines());
+    }
+    
     public void gameWon()
     {
         updateAllCells();
@@ -309,7 +318,7 @@ public class Controller implements MouseListener, ActionListener, WindowListener
         });        
         restart.addActionListener((ActionEvent e) -> {
             dialog.dispose();            
-            game.restartGame();
+            restartGame();
         });        
         playAgain.addActionListener((ActionEvent e) -> {
             dialog.dispose();            
@@ -653,7 +662,7 @@ public class Controller implements MouseListener, ActionListener, WindowListener
                     case JOptionPane.NO_OPTION: 
                         game.getScore().increaseGamesPlayed();   
                         game.getScore().saveScoreIntoDB();
-                        game.restartGame();
+                        restartGame();
                         break;
                     
                     case JOptionPane.CANCEL_OPTION: break;
