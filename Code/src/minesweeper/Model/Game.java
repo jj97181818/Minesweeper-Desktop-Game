@@ -15,8 +15,6 @@ public class Game extends Observable
 
     private Board board;
     
-    private UI gui;
-    
     private Score score;
     
     private int timePassed;
@@ -24,10 +22,8 @@ public class Game extends Observable
         
     //------------------------------------------------------------------//        
 
-    public Game(UI gui, Board board)
+    public Game()
     {
-        this.gui = gui;
-        this.board = board;
         // set db path
         String p = "";
 
@@ -42,7 +38,7 @@ public class Game extends Observable
 
         dbPath =   "jdbc:ucanaccess://" + p;
 
-        //createBoard();
+        createBoard();
         
         score = new Score();
         score.getScoreFromDB();
