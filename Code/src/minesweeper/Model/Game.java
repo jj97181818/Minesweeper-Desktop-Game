@@ -237,6 +237,21 @@ public class Game extends Observable
         }                                     
     }                           
     
+    public void rightClick(int x, int y) {
+        if(board.getCells()[x][y].getContent().equals("F")) 
+        {   
+            board.getCells()[x][y].setContent("");
+            setChanged();
+            notifyObservers("Mines++");
+        }
+        else if (board.getCells()[x][y].getContent().equals("")) 
+        {
+            board.getCells()[x][y].setContent("F");
+            setChanged();
+            notifyObservers("Mines--");
+        }
+    }
+    
     //Check the game to see if its finished or not
     public void checkGame()
     {		

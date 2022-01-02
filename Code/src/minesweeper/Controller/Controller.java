@@ -130,6 +130,12 @@ public class Controller implements MouseListener, ActionListener, WindowListener
             else if (arg == "Lost") {
                 gameLost();
             }
+            else if (arg == "Mines++") {
+                gui.incMines();
+            }
+            else if (arg == "Mines--") {
+                gui.decMines();
+            }
         }
     }
     
@@ -693,25 +699,8 @@ public class Controller implements MouseListener, ActionListener, WindowListener
             // Right Click
             else if (SwingUtilities.isRightMouseButton(e)) 
             {
-                if(game.getBoard().getCells()[x][y].getContent().equals("F")) 
-                {   
-                    game.getBoard().getCells()[x][y].setContent("");
-                    button.setText("");
-                    button.setBackground(new Color(0,110,140));
-
-                    //simple blue
-
-                    button.setIcon(gui.getIconTile());
-                    gui.incMines();
-                }
-                else if (game.getBoard().getCells()[x][y].getContent().equals("")) 
-                {
-                    game.getBoard().getCells()[x][y].setContent("F");
-                    button.setBackground(Color.blue);	
-
-                    button.setIcon(gui.getIconFlag());
-                    gui.decMines();
-                }
+                game.rightClick(x, y);
+                updateAllCells();
             }
 
             game.checkGame();
