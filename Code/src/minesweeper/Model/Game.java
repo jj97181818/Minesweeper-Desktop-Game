@@ -261,8 +261,7 @@ public class Game extends Observable
         int neighbours;
         
         Cell cells[][] = board.getCells();
-        JButton buttons[][] = gui.getButtons();
-
+        
         // Columns
         for(int x = board.makeValidCoordinateX(xCo - 1) ; x <= board.makeValidCoordinateX(xCo + 1) ; x++) 
         {			
@@ -277,24 +276,12 @@ public class Game extends Observable
 
                     // Reveal the neighbours of the current (neighbouring) cell
                     cells[x][y].setContent(Integer.toString(neighbours));
-
-                    if (!cells[x][y].getMine())
-                        buttons[x][y].setIcon(null);                        
-                    
+           
                     // Is this (neighbouring) cell a "zero" cell itself?
                     if(neighbours == 0)
                     {                        
                         // Yes, give it a special color and recurse!
-                        buttons[x][y].setBackground(Color.lightGray);
-                        buttons[x][y].setText("");
                         findSurroundingZeroes(x, y);
-                    }
-                    else
-                    {
-                        // No, give it a boring gray color.
-                        buttons[x][y].setBackground(Color.lightGray);
-                        buttons[x][y].setText(Integer.toString(neighbours));
-                        gui.setTextColor(buttons[x][y]);                        
                     }
                 }
             }
