@@ -6,7 +6,6 @@ import javafx.util.Pair;
 import java.util.Observable;
 import java.util.Observer;
 
-// This is the main controller class
 public class Game extends Observable
 {
     public static String dbPath;
@@ -19,9 +18,7 @@ public class Game extends Observable
     
     private int timePassed;
     private int mines;
-        
-    //------------------------------------------------------------------//        
-
+              
     public Game()
     {
         // set db path

@@ -197,9 +197,7 @@ public class UI extends JFrame
                
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     }
-	
-    //-----------------------------------------------------------------//
-
+    
     //-----------------------Related to Timer------------------------//
     
     // Starts the timer
@@ -270,7 +268,7 @@ public class UI extends JFrame
     //------------------HELPER FUNCTIONS-----------------------//
 
     //Makes buttons clickable
-    public void enableAll()
+    private void enableAll()
     {
         for( int x=0 ; x<cols ; x++ ) 
         {
@@ -282,7 +280,7 @@ public class UI extends JFrame
     }
 
     //Makes buttons non-clickable
-    public void disableAll()
+    private void disableAll()
     {
         for( int x=0 ; x<cols ; x++ ) 
         {

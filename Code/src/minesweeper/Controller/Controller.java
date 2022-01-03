@@ -43,7 +43,7 @@ public class Controller implements MouseListener, ActionListener, WindowListener
         observable.addObserver(this);
     }
  
-    public void resumeGameOrNot()
+    private void resumeGameOrNot()
     {
         if(game.getBoard().checkBoardStateExist())
         {
@@ -82,7 +82,7 @@ public class Controller implements MouseListener, ActionListener, WindowListener
         }
     }
     
-    public void setButtonImages()
+    private void setButtonImages()
     {
         Cell cells[][] = game.getBoard().getCells();
         JButton buttons[][] = gui.getButtons();
@@ -133,7 +133,7 @@ public class Controller implements MouseListener, ActionListener, WindowListener
         }
     }
     
-    public void newGame() {
+    private void newGame() {
         game.newGame();
         gui.interruptTimer();
         gui.resetTimer();        
@@ -141,7 +141,7 @@ public class Controller implements MouseListener, ActionListener, WindowListener
         gui.setMines(game.getBoard().getNumberOfMines());
     }
     
-    public void restartGame()
+    private void restartGame()
     {
         game.restartGame();
         gui.interruptTimer();
@@ -150,7 +150,7 @@ public class Controller implements MouseListener, ActionListener, WindowListener
         gui.setMines(game.getBoard().getNumberOfMines());
     }
     
-    public void gameWon()
+    private void gameWon()
     {
         updateAllCells();
         showBoardSolution();
@@ -251,7 +251,7 @@ public class Controller implements MouseListener, ActionListener, WindowListener
         dialog.setVisible(true);                        
     }
     
-    public void gameLost()
+    private void gameLost()
     {
         updateAllCells();
         showBoardSolution();
@@ -351,7 +351,7 @@ public class Controller implements MouseListener, ActionListener, WindowListener
         dialog.setVisible(true);        
     }
     
-    public void showScore()
+    private void showScore()
     {
         JDialog dialog = new JDialog(gui, Dialog.ModalityType.DOCUMENT_MODAL);
 
@@ -521,7 +521,7 @@ public class Controller implements MouseListener, ActionListener, WindowListener
         }
     }
     
-    public void updateAllCells() {
+    private void updateAllCells() {
         JButton buttons[][] = gui.getButtons();
         
         for (int i = 0; i < game.getBoard().getRows(); i++) {
